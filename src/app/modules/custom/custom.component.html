@@ -1,0 +1,102 @@
+<div class="container">
+    <div class="offset-md-3 col-md-6">
+        <div class="card mt-5">
+            <div class="card-body">
+                <h3 class="text-center text-info">Create New Team</h3>
+                <div *ngIf="isValidFormSubmitted" class="submitted"> Form submitted successfully. </div>
+                <div class="team">
+                    <form [formGroup]="Cmr" (ngSubmit)="onFormSubmit()">
+                        <div class="form-group">
+                            <input type="text" class="form-control" formControlName="FullName" placeholder="fullname">
+                            <small class="text-danger"
+                                *ngIf="FullName.touched && FullName.errors || FullName.invalid && isValidFormSubmitted != null && !isValidFormSubmitted">
+                                Full name is required.</small>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" class="form-control" formControlName="Email" placeholder="shop email">
+                            <small class="text-danger"
+                                *ngIf="Email.touched && Email.errors || Email.invalid && isValidFormSubmitted != null && !isValidFormSubmitted">
+                                Shop email is required.</small>
+                        </div>
+                        <div formArrayName="Address">
+                            <div *ngFor="let emp of Address.controls; let i = index" [formGroupName]="i"
+                                class="employee">
+                                <p class="font-weight-600 text-info">Shop Address {{i + 1}}</p>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" formControlName="PloatNo"
+                                        placeholder="PloatNo">
+                                    <small class="text-danger"
+                                        *ngIf="Address.controls[i].get('PloatNo').touched && Address.controls[i].get('PloatNo').errors
+                                         || Address.controls[i].get('PloatNo').errors?.required && isValidFormSubmitted != null && !isValidFormSubmitted">
+                                        PlotNO name required.</small>
+                                </div>
+
+                                <div class="form-group">
+                                    <select class="form-control" id="exampleFormControlSelect1"
+                                        formControlName="Locality">
+                                        <option *ngFor="let location of allLocations | async" [ngValue]="location.name">
+                                            {{ location.displayName }}
+                                        </option>
+                                    </select>
+                                    <small class="text-danger" *ngIf="Address.controls[i].get('Locality').touched && Address.controls[i].get('Locality').errors 
+                                            || Address.controls[i].get('Locality').errors?.required &&isValidFormSubmitted != null && 
+                                            !isValidFormSubmitted">Minimum Select locations.</small>
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="text" class="form-control" formControlName="PINcode"
+                                        placeholder="PINcode">
+                                    <small class="text-danger"
+                                        *ngIf="Address.controls[i].get('PINcode').touched  && Address.controls[i].get('PINcode').errors 
+                                            || Address.controls[i].get('PINcode').errors?.required && isValidFormSubmitted != null && !isValidFormSubmitted">
+                                        Pincode required.</small>
+                                </div>
+                                <div class="d-flex mb-3">
+                                    <button type="button" class="btn btn-danger mr-3" (click)="deleteAddress(idx)"
+                                        *ngIf="!i==0">Delete</button>
+                                    <button type="button" class="btn btn-info" (click)="addAddress()">Add </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div formArrayName="SubUsers">
+                            <div *ngFor="let emp of SubUsers.controls; let i = index" [formGroupName]="i"
+                                class="employee">
+                                <p class="font-weight-600 text-info">Sub User {{i + 1}}</p>
+                                
+                                <div class="form-group">
+                                    <input type="text" class="form-control" formControlName="name"
+                                        placeholder="PloatNo">
+                                    <small class="text-danger"
+                                        *ngIf="SubUsers.controls[i].get('name').touched && SubUsers.controls[i].get('name').errors
+                                         || SubUsers.controls[i].get('name').errors?.required && isValidFormSubmitted != null && !isValidFormSubmitted">
+                                        subuser name required.</small>
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" class="form-control" formControlName="email"
+                                        placeholder="email">
+                                    <small class="text-danger"
+                                        *ngIf="SubUsers.controls[i].get('email').touched  && SubUsers.controls[i].get('email').errors 
+                                            || SubUsers.controls[i].get('email').errors?.required && isValidFormSubmitted != null && !isValidFormSubmitted">
+                                        Subuser Email required.</small>
+                                </div>
+                                <div class="mb-3">
+                                    <button type="button" class="btn btn-danger mr-3"
+                                        (click)="deleteSubusers(idx)" *ngIf="!i==0">Delete</button>
+                                    <button type="button" class="btn btn-info" (click)="addSubusers()">Add </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <button class="btn btn-primary" [disabled]="!Cmr.valid">SUBMIT</button>
+                            <button class="btn btn-info" type="button" (click)="resetTeamForm()">RESET</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{shopdetails}}

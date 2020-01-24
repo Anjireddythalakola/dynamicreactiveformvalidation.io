@@ -1,0 +1,33 @@
+.material-container {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    @media (min-width: 960px) {
+        width: 900px;
+    }
+    @media (min-width:1200px) {
+        width: 1140px;
+    }
+    .main-card {
+        margin-top: 50px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+        @media (min-width: 900px) {
+            width: 600px;
+        }
+        .example-card {
+            margin: 20px 0px;
+            .mat-card-title {
+                margin: 0;
+                color: #ff4081;
+                font-size: 20px;
+            }
+        }
+    }
+    .form-element {
+        width: 100%;
+    }
+}

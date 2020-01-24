@@ -1,0 +1,108 @@
+<div class="material-container">
+  <mat-card class="main-card">
+
+    <mat-card-title>Shop Details</mat-card-title>
+    <div *ngIf="!post; else forminfo" novalidate>
+
+      <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)" class="form">
+        <mat-form-field class="form-element">
+          <input matInput placeholder="Name" formControlName="fullname">
+          <mat-error *ngIf="!formGroup.controls['fullname'].valid && formGroup.controls['fullname'].touched">
+            {{fullname() }}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="form-element">
+          <input matInput placeholder="Emailaddress" formControlName="email">
+          <mat-error *ngIf="!formGroup.controls['email'].valid && formGroup.controls['email'].touched">
+            {{ getErrorEmail() }}
+          </mat-error>
+        </mat-form-field>
+
+        <div formArrayName="Address">
+          <div *ngFor="let emp of Address.controls; let i = index" [formGroupName]="i">
+            <mat-card class="example-card">
+              <mat-card-title>Address{{i + 1}}</mat-card-title>
+              <mat-card-content>
+                <mat-form-field class="form-element">
+                  <input matInput placeholder="Ploat number" formControlName="PloatNo">
+                  <mat-error class="text-danger" *ngIf="Address.controls[i].get('PloatNo').touched && Address.controls[i].get('PloatNo').errors
+               || Address.controls[i].get('PloatNo').errors?.required">
+                    please enter ploat number please try again!
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field class="form-element">
+                  <mat-label>Locality</mat-label>
+                  <mat-select formControlName="Locality" name="Location">
+                    <mat-option *ngFor="let Location of Location" [value]="Location.value">
+                      {{Location.viewValue}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="Address.controls[i].get('Locality').touched && Address.controls[i].get('Locality').errors 
+              || Address.controls[i].get('Locality').errors?.required">
+                    please enter locality please try again!
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field class="form-element">
+                  <input matInput placeholder="PINcode" type="number" formControlName="PINcode">
+                  <mat-error *ngIf="Address.controls[i].get('PINcode').touched && Address.controls[i].get('PINcode').errors 
+              || Address.controls[i].get('PINcode').errors?.required">
+                    please enter pincode please try again!
+                  </mat-error>
+                </mat-form-field>
+              </mat-card-content>
+              <mat-card-actions>
+                <button *ngIf="!i==0" mat-raised-button color="primary" type="button"
+                  (click)="deleteAddress(idx)">Delete</button>
+                <button type="button" mat-raised-button color="primary" class="button" [disabled]="!Address.valid"
+                  (click)="addAddress()">Add
+                </button>
+              </mat-card-actions>
+            </mat-card>
+          </div>
+        </div>
+
+        <div formArrayName="SubUsers">
+          <div *ngFor="let emp of SubUsers.controls; let i = index" [formGroupName]="i">
+            <mat-card class="example-card">
+              <mat-card-title>Sub Users{{i + 1}}</mat-card-title>
+              <mat-card-content>
+                <mat-form-field class="form-element">
+                  <input matInput placeholder="UserName" formControlName="name">
+                  <mat-error class="text-danger" *ngIf="SubUsers.controls[i].get('name').touched && SubUsers.controls[i].get('name').errors
+           || SubUsers.controls[i].get('name').errors?.required">
+                    please enter sub user please try again!
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field class="form-element">
+                  <input matInput placeholder="Useremail" formControlName="email">
+                  <mat-error *ngIf="SubUsers.controls[i].get('email').touched && SubUsers.controls[i].get('email').errors 
+          || SubUsers.controls[i].get('email').errors?.required">
+                    please enter sub user email please try again!
+                  </mat-error>
+                </mat-form-field>
+              </mat-card-content>
+              <mat-card-actions>
+                <button *ngIf="!i==0" mat-raised-button color="warn" type="button"
+                  (click)="deleteSubusers(idx)">Delete</button>
+                <button type="button" mat-raised-button color="primary" class="button" [disabled]="!SubUsers.valid"
+                  (click)="addSubusers()">Add
+                </button>
+              </mat-card-actions>
+            </mat-card>
+          </div>
+        </div>
+
+        <button mat-raised-button color="accent" type="submit" class="button" [disabled]="!formGroup.valid">Submit
+          Form</button>
+      </form>
+    </div>
+
+    <ng-template #forminfo>
+      <div>
+        <div>{{ post | json }}</div>
+        <button mat-raised-button color="primary" (click)="onSubmit()" class="button">back button</button>
+      </div>
+    </ng-template>
+  </mat-card>
+</div>

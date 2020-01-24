@@ -1,0 +1,14 @@
+.mat-toolbar-multiple-rows{
+.head-title{
+font-size:20px;
+@media (max-width:500px){
+display:none;
+}
+}
+    .example-button {
+        margin-left:20px;
+      }
+      .example-spacer {
+        flex: 1 1 auto;
+      }
+    }
